@@ -2,14 +2,19 @@ import axios from 'axios';
 
 export function getProducts(){
     return (dispatch) => {
-        fetch('http://localhost:3001/products')
-         .then((res) => res.json())
-         .then((json) => {
-            dispatch({
-                type: 'GET_PRODUCTS',
-                payload: json,
-            })
-         })
+        try {
+            fetch('http://localhost:3001/products')
+             .then((res) => res.json())
+             .then((json) => {
+                dispatch({
+                    type: 'GET_PRODUCTS',
+                    payload: json,
+                })
+             })
+            
+        } catch (error) {
+            console.log(error)
+        }
     }
 };
 
@@ -33,14 +38,21 @@ export function getNameProducts(name) {
 
 export function getCategories(){
     return (dispatch) => {
-        fetch('http://localhost:3001/products/categories')
-         .then((res) => res.json())
-         .then((json) => {
-            dispatch({
-                type: 'GET_CATEGORIES',
-                payload: json,
-            })
-         })
+
+        try {
+            
+            fetch('http://localhost:3001/products/categories')
+             .then((res) => res.json())
+             .then((json) => {
+                dispatch({
+                    type: 'GET_CATEGORIES',
+                    payload: json,
+                })
+             })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 };
 
@@ -64,11 +76,17 @@ export function getDetail(id) {
 
 export function postProduct(payload){
     return async (dispatch) => {
-        const response = await axios.post(
-          `http://localhost:3001/products`,
-          payload
-        );
-        return response;
+try {
+    
+    const response = await axios.post(
+      `http://localhost:3001/products`,
+      payload
+    );
+    return response;
+} catch (error) {
+    console.log(error)
+}
+        
       };
 }
 
