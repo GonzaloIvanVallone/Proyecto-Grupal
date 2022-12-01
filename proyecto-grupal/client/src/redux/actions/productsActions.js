@@ -44,6 +44,24 @@ export function getCategories(){
     }
 };
 
+export function getDetail(id) {
+    return async function (dispatch) {
+      try {
+        var json = await axios.get(
+          `https://dummyjson.com/products/${id}`
+        );
+  
+        return dispatch({
+          type: "GET_DETAILS",
+          payload: json.data,
+        });
+      } catch (error) {
+        console.log("catcheo");
+        console.log(error);
+      }
+    };
+  }
+
 export function postProduct(payload){
     return async (dispatch) => {
         const response = await axios.post(
