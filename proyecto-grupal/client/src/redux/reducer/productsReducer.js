@@ -13,6 +13,11 @@ export default function productsReducer (state= initialState, action){
                 products: action.payload,
                 allProducts: action.payload
             };
+            case "GET_NAME_PRODUCTS":
+                return {
+                  ...state,
+                  videogames: action.payload,
+                };
         case 'GET_CATEGORIES':
             return{
                 ...state,

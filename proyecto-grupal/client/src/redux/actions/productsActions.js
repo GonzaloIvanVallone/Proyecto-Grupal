@@ -13,6 +13,24 @@ export function getProducts(){
     }
 };
 
+export function getNameProducts(name) {
+    return async function (dispatch) {
+      try {
+        var json = await axios.get(
+          `https://dummyjson.com/products/search?q=${name}`
+        );
+        return dispatch({
+          type: "GET_NAME_PRODUCTS",
+          payload: json.data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  }
+
+
+
 export function getCategories(){
     return (dispatch) => {
         fetch('http://localhost:3001/products/categories')
