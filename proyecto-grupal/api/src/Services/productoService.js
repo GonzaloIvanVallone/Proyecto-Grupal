@@ -1,5 +1,5 @@
 const { Product, Category } = require("../db.js");
-const { Model } = require("sequelize");
+
 
 const getAllProducts = async () => {
   const allProducts = await Product.findAll({
@@ -61,6 +61,15 @@ const productUpdate = async (id, body) => {
   return prodUpdate;
 };
 
+const getLastIdProduct = async () => {
+  const allId = await Product.findOne({
+    order: [ [ 'id', 'DESC' ]],
+    });
+   
+
+  return allId;
+}
+
 module.exports = {
   getAllProducts,
   createNewProduct,
@@ -68,4 +77,5 @@ module.exports = {
   deleteProduct,
   productUpdate,
   findProvider,
+  getLastIdProduct,
 };

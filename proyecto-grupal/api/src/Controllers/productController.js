@@ -2,6 +2,7 @@ const productServices = require("../Services/productoService");
 const { Product, Category } = require("../db.js");
 const axios = require("axios");
 
+
 const getAllProducts = async (req, res, next) => {
   const { name } = req.query;
 
@@ -26,10 +27,11 @@ const getAllProducts = async (req, res, next) => {
 
 const createNewProduct = async (req, res, next) => {
   const { body } = req;
-
+  let id = await productServices.getLastIdProduct()
+  
   try {
     const newItemProduct = {
-      id: body.id,
+      id: ++id.dataValues.id,
       title: body.title,
       description: body.description,
       price: body.price,

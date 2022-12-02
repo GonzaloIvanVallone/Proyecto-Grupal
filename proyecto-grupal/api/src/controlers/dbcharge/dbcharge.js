@@ -5,7 +5,11 @@ const {apiArray} = require('./productfix')
 
 const storeAllProducts = async () =>{
     try{
-        await Product.bulkCreate(apiArray);
+        for (let i = 0; i < apiArray.length; i++) {
+            let nuevo = await Product.create(apiArray[i]);
+            let nuevaCat = await Category.findOne({where:{name: apiArray[i].categories}});
+            await nuevo.addCategory(nuevaCat);
+        }
         console.log('Products correctly stored into the DB');
     }catch(error){
         console.log(error)
@@ -23,8 +27,8 @@ const storeAllCategories = async () =>{
         });
         await Category.bulkCreate(apiInfo);
         console.log('Categories correctly stored into the DB');
-    }catch{
-        console.log('Unexpected error while storing Categories in the DB')
+    }catch(error){
+        console.log(error)
     }
 }
 

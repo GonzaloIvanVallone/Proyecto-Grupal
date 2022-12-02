@@ -5,6 +5,7 @@ import * as actions from '../../redux/actions/productsActions';
 import SearchBar from '../SearchBar/SearchBar';
 import { Link } from "react-router-dom";
 import ProductCard from '../ProductCard/ProductCard';
+import Pagination from "../Pagination/Pagination";
 import s from './Home.module.css';
 import logo from "..//../img/logo.JPG";
 
@@ -13,7 +14,15 @@ export default function Home() {
 
   const dispatch = useDispatch();
   let listProducts = useSelector((state) => state.products);
+  let allProducts = useSelector((state) => state.allProducts);
   // let listCategories = useSelector((state) => state.categories);
+
+
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(8);
+  let indexlastGame = page * pageSize;
+  let indexFirstGame = indexlastGame- pageSize;
+  let currentProducts = listProducts.slice(indexFirstGame, indexlastGame);
 
   useEffect(() => {
     dispatch(actions.getProducts());
@@ -21,11 +30,10 @@ export default function Home() {
   },
   [dispatch])
 
-  const [page, setPage] = useState(1);
-  const [pageSize, setPageSize] = useState(10);
-  let indexlastGame = page * pageSize;
-  let indexFirstGame = indexlastGame- pageSize;
-  // let currentGames = gamesOrdered.slice(indexFirstGame, indexlastGame);
+  const pagination = (action)=>{
+    if (action === 'back') {setPage(prevState => (prevState - 1))}
+    else if (action === 'next') {setPage(prevState => (prevState + 1))}
+  };
 
   console.log('listProducts',listProducts);
   console.log('page',page);
@@ -41,18 +49,22 @@ export default function Home() {
       
       <div className="">
 
-
       </div>
 
       <div className={s.productCards}>
         {
-          listProducts?.map( (product) => 
-          <ProductCard key={product.id} title={product.title} id={product.id} price={product.price} images={product.thumbnail} />
+          currentProducts?.map( (product, index) => 
+           
+              <ProductCard key={product.id} title={product.title} id={product.id} price={product.price} images={product.images} />
+            
           )
 
         }
       </div>
 
+      <Pagination pageSize={pageSize} totalProducts={listProducts.length} 
+        page={page} pagination={pagination}/>
+        
     </div>
   );
 

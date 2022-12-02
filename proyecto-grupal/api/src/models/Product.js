@@ -4,8 +4,10 @@ module.exports = (sequelize) => {
     sequelize.define('product', {
         id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
-            primaryKey: true
+            allowNull:false,
+            primaryKey: true,
+            
+        
         },
         title: {
             type: DataTypes.STRING,
@@ -31,16 +33,12 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        categories: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         thumbnail: {
             type: DataTypes.STRING,
             allowNull: false,
         },
         images: {
-            type: DataTypes.TEXT,
+            type: DataTypes.ARRAY(DataTypes.STRING),
             allowNull: false,
         },
         active: {
