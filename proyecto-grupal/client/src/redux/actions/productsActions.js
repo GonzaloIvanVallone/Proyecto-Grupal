@@ -22,7 +22,7 @@ export function getNameProducts(name) {
     return async function (dispatch) {
       try {
         var json = await axios.get(
-          `https://dummyjson.com/products/search?q=${name}`
+          `http://localhost:3001/products?name=${name}`
         );
         return dispatch({
           type: "GET_NAME_PRODUCTS",
@@ -60,7 +60,7 @@ export function getDetail(id) {
     return async function (dispatch) {
       try {
         var json = await axios.get(
-          `https://dummyjson.com/products/${id}`
+          `http://localhost:3001/products/${id}`
         );
   
         return dispatch({
