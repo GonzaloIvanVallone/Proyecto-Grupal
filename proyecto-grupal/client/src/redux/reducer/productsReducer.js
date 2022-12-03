@@ -16,7 +16,7 @@ export default function productsReducer(state = initialState, action) {
     case "GET_NAME_PRODUCTS":
       return {
         ...state,
-        videogames: action.payload,
+        products: action.payload,
       };
     case "GET_CATEGORIES":
       return {
