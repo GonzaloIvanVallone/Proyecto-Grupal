@@ -3,6 +3,8 @@ const initialState = {
     allProducts : [],
     categories: [],
     cart: [],
+    reviews: [],
+    orders: [],
     detail: {}
 };
 
@@ -194,23 +196,40 @@ export default function productsReducer (state= initialState, action){
                 images: productSelected.images,
                 amount: action.payload.amount,
             },
-          ],
+           ],
+         };
+        }
+
+        case 'DELETE_ITEMS':
+         const data = state.cart?.filter(
+         (item) => item.id !== action.payload.id
+         );
+         return {
+           ...state,
+           cart: data,
         };
-      }
 
-    case 'DELETE_ITEMS':
-      const data = state.cart?.filter(
-        (item) => item.id !== action.payload.id
-      );
-      return {
-        ...state,
-        cart: data,
-      };
+        case "CREATE_REVIEW":
+         return {
+           ...state,
+           reviews: [...state.reviews, action.payload],
+        };
 
-    default:
+        case "GET_ORDERS":
+         return {
+           ...state,
+           orders: action.payload,
+        };
+
+        case "GET_ORDER_DETAIL":
+         return {
+          ...state,
+          orderDetail: action.payload,
+        };
+
+        default:
         return {...state};
-
-    }
+     }
 }
 
     

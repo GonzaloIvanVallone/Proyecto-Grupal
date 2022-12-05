@@ -133,6 +133,23 @@ export function deleteCategory(id) {
   }
 };
 
+export function postReviews(id, payload) {
+  return async function (dispatch) {
+    try {
+    await axios.post(`http://localhost:3001/rating/${id}`, payload);
+    return dispatch({
+      type: "CREATE_REVIEW",
+      payload,
+    });
+    } catch (error) {
+      console.log(error)
+    }
+  };
+}
+
+
+//SORT
+
 export function alphabeticalOrder(payload){
     return {
         type: 'ALPHABETICAL_ORDER',
@@ -167,6 +184,34 @@ export function searchProduct(payload){
         payload
     }
 };
+
+
+
+//ORDERS & CART
+
+export function getOrders() {
+  return async function (dispatch) {
+    try {
+      let json = await axios.get('http://localhost:3001/orders')
+      return dispatch({
+        type: 'GET_ORDERS',
+        payload: json.data
+      })
+    } catch(err) {
+      console.log(err);
+    }
+  }
+};
+
+export function getOrderDetail(id) {
+  return async function (dispatch) {
+    const detail = await axios.get(`http://localhost:3001/orders/${id}`);
+
+    return dispatch({ 
+      type: "GET_ORDER_DETAIL", 
+      payload: detail?.data });
+  };
+}
 
 export function setCart(cart) {
   return {
