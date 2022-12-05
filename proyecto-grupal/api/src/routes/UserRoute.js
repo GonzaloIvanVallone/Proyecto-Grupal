@@ -4,6 +4,7 @@ const { createNewUser, deleteUser, getAllUsers, promoteUser } = require('../Cont
 
 //localhost:3001/user
 
+
 router.post("/", createNewUser);
 router.put("/", deleteUser);
 router.put("/:id", promoteUser);

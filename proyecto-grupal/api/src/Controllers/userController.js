@@ -2,7 +2,6 @@ const userServices = require('../Services/userService.js');
 const { User } = require('../db.js');
 const bcrypt = require("bcrypt");
 
-
 const getAllUsers = async (_req, res, next) => {
     try{
         const users = await User.findAll();
