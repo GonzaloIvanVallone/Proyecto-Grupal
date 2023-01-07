@@ -38,6 +38,24 @@ const getOrders = async (id) => {
   return OrderId;
 };
 
+const getOrdersByUser = async (userId) => {
+  try {
+    const userOrders = await Order.findAll(
+      { attributes: [ 'id', 'status', 'quantity', 'price', 'idMp', 'shippingCost', 'shippingAddress', 
+        'shippingZip', 'shippingCity', 'shippingState' ],
+        include: { model: OrderDetail }
+      },
+      {
+        where: {userid: userId }
+      }
+    )
+    console.log('orders', userOrders);
+    return userOrders;
+  } catch (error) {
+    console.log('Error Services (Orders):', error); 
+  }
+}
+
 const findOrders = async (order) => {
   for (let i = 0; i < order.length; i++) {
     const prodId = await Product.findAll({
@@ -80,5 +98,6 @@ module.exports = {
   orderUpdate,
   findOrders,
   getOrders,
+  getOrdersByUser,
   deleteOrder,
 };

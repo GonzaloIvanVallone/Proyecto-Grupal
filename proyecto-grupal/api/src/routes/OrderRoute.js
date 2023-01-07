@@ -5,6 +5,7 @@ const {
   updateOrder,
   deleteOrder,
   updateStatus,
+  getOrdersByUser
 } = require("../Controllers/orderController");
 
 
@@ -19,6 +20,8 @@ router.post("/", createNewOrder);
 router.post("/cart", saveUserCart);
 
 router.get("/cart", getUserCart);
+
+router.get("/user/:userid", getOrdersByUser);
 
 router.put("/:id", updateOrder);
 

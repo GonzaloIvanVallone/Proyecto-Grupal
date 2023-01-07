@@ -83,6 +83,22 @@ const getOrderById = async (req, res, next) => {
   }
 };
 
+const getOrdersByUser = async (req, res, next) => {
+  try {
+    const { userid } = req.params
+    const userOrders = await ordersServices.getOrdersByUser(userid);
+    if (userOrders.length > 0) {
+      res.status(200).send(userOrders)
+    } else {
+      res.status(404).send(`There are no orders to user: ${userid}`)
+    }
+  } catch (error) {
+    console.log('Error in Controller (Orders):', error);
+    next(error)
+  }
+}
+
+
 const updateOrder = async (req, res, next) => {
   const { id } = req.params;
 
@@ -215,5 +231,6 @@ module.exports = {
   updateOrder,
   updateStatus,
   getOrderById,
+  getOrdersByUser,
   deleteOrder,
 };
