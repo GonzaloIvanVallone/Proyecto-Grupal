@@ -9,7 +9,8 @@ const initialState = {
   allProducts: [],
   categories: [],
   cart: [],
-  reviews: {},
+  reviews: [],
+  review: {},
   orders: [],
   allOrders: [],
   detail: {},
@@ -224,16 +225,22 @@ export default function productsReducer(state = initialState, action) {
         cart: data,
       };
 
-    /*case "CREATE_REVIEW":
+    case "CREATE_REVIEW":
       return {
         ...state,
         reviews: [...state.reviews, action.payload],
-      };*/
+      };
 
     case "GET_REVIEWS":
       return {
-        ...JSON.parse(JSON.stringify(state)),
+        ...state,
         reviews: action.payload,
+      };
+
+    case "DELETE_REVIEWS":
+      return {
+        ...state,
+        reviews: state.reviews.filter((review) => review.id !== action.payload),
       };
 
     case "CREATE_ORDER":
@@ -307,61 +314,60 @@ export default function productsReducer(state = initialState, action) {
         ...state,
         userProfile: action.payload,
       };
-      
-    case 'CANCELL_ORDER':
-      return{
-        ...state
-      }
-    case 'CONFIRM_ORDER':
-      return{
-        ...state
-      }
-      case 'SHIPPING_ORDER':
-        return{
-          ...state
-        }
-    case 'GET_USER_WISH_LIST':
-        return {
-          ...state,
-          wishListItems: action.payload
-        }
-      case 'ADD_PRODUCT_TO_WISH_LIST':
-      console.log('action.payload de ADD_PRODUCT_TO_WISH_LIST', action.payload);
+
+    case "CANCELL_ORDER":
+      return {
+        ...state,
+      };
+    case "CONFIRM_ORDER":
+      return {
+        ...state,
+      };
+    case "SHIPPING_ORDER":
+      return {
+        ...state,
+      };
+    case "GET_USER_WISH_LIST":
+      return {
+        ...state,
+        wishListItems: action.payload,
+      };
+    case "ADD_PRODUCT_TO_WISH_LIST":
+      console.log("action.payload de ADD_PRODUCT_TO_WISH_LIST", action.payload);
       const wishListItemToAdd = {
-          id: action.payload.productId,
-          thumbnail: action.payload.thumbnail,
-          title: action.payload.title,
-          description: action.payload.description,
-          price: action.payload.price,
-        }
-        console.log('wishListItemToAdd: ', wishListItemToAdd);
-        // for(let i = 0; i < state.wishListItems.length; i++) {
-        //   console.log('entra al for');
-        //   console.log('wishListItemToAdd.id: ', wishListItemToAdd.id);
-        //   console.log('state.wishListItems[i].id: ', state.wishListItems[i].id);
-        //   if(wishListItemToAdd.id === state.wishListItems[i].id) {
-        //     console.log('entra a wishListItemToAdd.id === state.wishListItems[i].id: ' + wishListItemToAdd.id === state.wishListItems[i].id)
-        //     return {
-        //       ...state,
-        //       wishListItems: [...state.wishListItems]
-        //     }
-        //   }
-        // }
-        return {
-          ...state,
-          wishListItems: [
-            ...state.wishListItems,
-            wishListItemToAdd
-          ]
-        }
-      case 'REMOVE_PRODUCT_FROM_WISH_LIST':
-        console.log('action.payload de REMOVE_PRODUCT_FROM_WISH_LIST: ' + action.payload);
-        return {
-          ...state,
-          wishListItems: state.wishListItems.filter(wishListItem => {
-            return (wishListItem.id !== action.payload)
-          })
-        }
+        id: action.payload.productId,
+        thumbnail: action.payload.thumbnail,
+        title: action.payload.title,
+        description: action.payload.description,
+        price: action.payload.price,
+      };
+      console.log("wishListItemToAdd: ", wishListItemToAdd);
+      // for(let i = 0; i < state.wishListItems.length; i++) {
+      //   console.log('entra al for');
+      //   console.log('wishListItemToAdd.id: ', wishListItemToAdd.id);
+      //   console.log('state.wishListItems[i].id: ', state.wishListItems[i].id);
+      //   if(wishListItemToAdd.id === state.wishListItems[i].id) {
+      //     console.log('entra a wishListItemToAdd.id === state.wishListItems[i].id: ' + wishListItemToAdd.id === state.wishListItems[i].id)
+      //     return {
+      //       ...state,
+      //       wishListItems: [...state.wishListItems]
+      //     }
+      //   }
+      // }
+      return {
+        ...state,
+        wishListItems: [...state.wishListItems, wishListItemToAdd],
+      };
+    case "REMOVE_PRODUCT_FROM_WISH_LIST":
+      console.log(
+        "action.payload de REMOVE_PRODUCT_FROM_WISH_LIST: " + action.payload
+      );
+      return {
+        ...state,
+        wishListItems: state.wishListItems.filter((wishListItem) => {
+          return wishListItem.id !== action.payload;
+        }),
+      };
     default:
       return { ...state };
   }

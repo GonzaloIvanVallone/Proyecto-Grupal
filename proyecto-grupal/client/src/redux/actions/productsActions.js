@@ -1,5 +1,5 @@
 import axios from "axios";
-import Swal from "sweetalert2"
+import Swal from "sweetalert2";
 
 export function getProducts() {
   return (dispatch) => {
@@ -130,27 +130,43 @@ export function deleteCategory(id) {
   };
 }
 
-/*export function postReviews(id, payload) {
+export const postReview = (reviewData) => async (dispatch) => {
+  try {
+    const response = await axios.post(
+      `http://localhost:3001/product/${reviewData.productId}/reviews`,
+      reviewData
+    );
+    console.log(response.data);
+    dispatch({
+      type: "POST_REVIEW",
+      payload: response.data,
+    });
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+export function getReviews(id) {
   return async function (dispatch) {
     try {
-      await axios.post(`http://localhost:3001/rating/${id}`, payload);
+      const res = await axios.get(`localhost:3001/product/reviews/${id}`);
       return dispatch({
-        type: "CREATE_REVIEW",
-        payload,
+        type: "GET_REVIEWS",
+        payload: res.data,
       });
     } catch (error) {
       console.log(error);
     }
   };
-}*/
+}
 
-export function getReviews(id) {
+export function deleteReview(id) {
   return async function (dispatch) {
     try {
-      const result = await axios.get("/review/" + id + "?order=DESC");
+      await axios.delete(`localhost:3001/product/reviews/${id}`);
       return dispatch({
-        type: "GET_REVIEWS",
-        payload: result.data,
+        type: "DELETE_REVIEW",
+        payload: id,
       });
     } catch (error) {
       console.log(error);
@@ -383,11 +399,11 @@ export function loginUser(payload) {
       sessionStorage.setItem("userId", response.data.id);
       sessionStorage.setItem("email", response.data.email);
       Swal.fire({
-        title: 'Welcome',
+        title: "Welcome",
         //text: 'Do you want to continue',
-        icon: 'success',
-        confirmButtonText: 'Continue'
-      })
+        icon: "success",
+        confirmButtonText: "Continue",
+      });
       return dispatch({
         type: "LOGIN_USER",
         payload: response.data,
@@ -509,7 +525,6 @@ export function resetConfirm(payload) {
   };
 }
 
-
 // WISHLIST-START
 
 export function getUserWishList() {
@@ -530,12 +545,21 @@ export function saveUserWishList(payload) {
   console.log(`Payload de action saveUserWishList: `);
   console.dir(payload);
   return async (dispatch) => {
-    const response = await axios.post(`http://localhost:3001/wishlist`, payload);
+    const response = await axios.post(
+      `http://localhost:3001/wishlist`,
+      payload
+    );
     return response;
   };
 }
 
-export function addProductToWishList(productId, thumbnail, title, description, price) {
+export function addProductToWishList(
+  productId,
+  thumbnail,
+  title,
+  description,
+  price
+) {
   return {
     type: "ADD_PRODUCT_TO_WISH_LIST",
     payload: { productId, thumbnail, title, description, price },
@@ -551,7 +575,6 @@ export function removeProductFromWishList(productId) {
 
 // WISHLIST-END
 
-
 export function filterByStatus(type) {
   return {
     type: "FILTER_BY_STATUS",
@@ -560,58 +583,54 @@ export function filterByStatus(type) {
 }
 
 export function cancellOrder(id) {
-  return async function (dispatch){
+  return async function (dispatch) {
     try {
       await axios.delete(`http://localhost:3001/orders/${id}`);
       return dispatch({
-        type: 'CANCELL_ORDER',
-        payload: '',
+        type: "CANCELL_ORDER",
+        payload: "",
       });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 export function confirmOrder(id) {
-  return async function (dispatch){
+  return async function (dispatch) {
     try {
       await axios.post(`http://localhost:3001/orders/${id}`);
       return dispatch({
-        type: 'CONFIRM_ORDER',
-        payload: '',
+        type: "CONFIRM_ORDER",
+        payload: "",
       });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
 export function shippingOrder(id) {
-  return async function (dispatch){
+  return async function (dispatch) {
     try {
       await axios.put(`http://localhost:3001/orders/shipping/${id}`);
       return dispatch({
-        type: 'SHIPPING_ORDER',
-        payload: '',
+        type: "SHIPPING_ORDER",
+        payload: "",
       });
     } catch (error) {
       console.log(error);
     }
-  }
+  };
 }
 
-
-
 export function notOrder(payload) {
- 
   return async function () {
     try {
-      
       let response = await axios.post(
         `http://localhost:3001/checkout/success`,
         payload
       );
-      
+
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("email", response.data.mail);
     } catch (error) {
@@ -621,16 +640,13 @@ export function notOrder(payload) {
 }
 
 export function notShippOrder(payload) {
-  
- 
   return async function () {
     try {
-      
       let response = await axios.post(
         `http://localhost:3001/checkout/success/shipping/`,
         payload
       );
-      
+
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("email", response.data.mail);
     } catch (error) {
@@ -638,4 +654,3 @@ export function notShippOrder(payload) {
     }
   };
 }
-

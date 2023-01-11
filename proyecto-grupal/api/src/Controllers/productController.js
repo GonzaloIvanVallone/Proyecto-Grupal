@@ -1,5 +1,5 @@
 const productServices = require("../Services/productoService");
-const { Product, Category } = require("../db.js");
+const { Product, Category, Review } = require("../db.js");
 const axios = require("axios");
 
 const getAllProducts = async (req, res, next) => {
@@ -120,10 +120,55 @@ const updateProduct = async (req, res, next) => {
   }
 };
 
+const postReview = (reviewData) => async (dispatch) => {
+  try {
+    const { data } = await axios.post(
+      `http://localhost:3001/product/${reviewData.productId}/reviews`,
+      reviewData
+    );
+    dispatch({ type: "POST_REVIEW", payload: data });
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getReviews = async (req, res, next) => {
+  try {
+    const reviews = await Review.findAll({
+      where: {
+        productId: req.params.id,
+      },
+    });
+    res.status(200).json(reviews);
+  } catch (err) {
+    res.status(404).json({ message: "There is no reviews to show", data: err });
+  }
+};
+
+const deleteReview = async (req, res, next) => {
+  try {
+    const result = await Review.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    if (result === 0) {
+      res.status(404).json({ message: "Review not found" });
+    } else {
+      res.status(200).json({ message: "Review deleted successfully" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllProducts,
   createNewProduct,
   getProductById,
   deleteProduct,
   updateProduct,
+  postReviews,
+  getReviews,
+  deleteReview,
 };
