@@ -4,6 +4,8 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/productsActions";
 import "./PasswordReset.css";
 import logo from "../../img/logo.JPG";
+import Swal from "sweetalert2"
+import { Link } from "react-router-dom";
 
 export default function PasswordReset() {
   const dispatch = useDispatch();
@@ -20,13 +22,18 @@ export default function PasswordReset() {
       dispatch(actions.resetPassword(emailData));
       setEmailData({ email: "" });
     } else {
-      alert("Mail required before submit");
+      Swal.fire({
+        title: 'Email required',
+        icon: 'error',
+        confirmButtonText: 'Continue'
+      })
     }
   };
 
   return (
     <div className="container">
       <div className="password_reset_container">
+        <Link className="link_goback" to='/home'>Return</Link>
         <div className="logo_container">
           <h3>CloudyBuy</h3>
           <img className="logo_image" src={logo} alt="logo" />

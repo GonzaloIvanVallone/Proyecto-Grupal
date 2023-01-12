@@ -83,7 +83,6 @@ useEffect(() => {
         .then(reponse => dispatch(actions.loginUser(userDb)))
          Swal.fire({
           title: 'New User created!',
-          //text: 'Do you want to continue',
           icon: 'success',
           confirmButtonText: 'Continue'
         })

@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import * as actions from "../../redux/actions/productsActions";
 import "./PasswordReset.css";
 import logo from "../../img/logo.JPG";
+import Swal from "sweetalert2"
 
 export default function PasswordConfirm() {
   const dispatch = useDispatch();
@@ -33,15 +34,31 @@ export default function PasswordConfirm() {
             password: "",
             password2: "",
           });
-          alert("password changed");
+          Swal.fire({
+            title: 'Password Changed!',
+            icon: 'success',
+            confirmButtonText: 'Continue'
+          })
         } else {
-          alert("access denied");
+          Swal.fire({
+            title: 'Acess Denied!',
+            icon: 'error',
+            confirmButtonText: 'Continue'
+          })
         }
       } else {
-        alert("passwords do not match");
+        Swal.fire({
+          title: 'Password do not match',
+          icon: 'error',
+          confirmButtonText: 'Continue'
+        })
       }
     } else {
-      alert("Please fill all fields");
+      Swal.fire({
+        title: 'Incomplete data!',
+        icon: 'error',
+        confirmButtonText: 'Continue'
+      })
     }
   };
   return (

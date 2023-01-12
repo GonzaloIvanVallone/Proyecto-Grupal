@@ -200,7 +200,6 @@ export default function CreateProduct() {
             // console.log(`Producto a agregar:`);
             // console.dir(input);
             dispatch(postProduct(input));
-            alert('Product created!');
             setInput({
                 title: '',
                 description: '',

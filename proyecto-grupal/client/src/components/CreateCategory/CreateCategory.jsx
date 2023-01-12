@@ -65,7 +65,6 @@ export default function CreateCategory () {
             let category = {};
             category.name = input.name;
             dispatch(postCategory(category));
-            alert('Category created!');
             setInput({
                 name:''
             });

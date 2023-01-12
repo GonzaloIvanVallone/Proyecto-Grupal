@@ -47,7 +47,6 @@ export default function Profile() {
       setErrors(prevState => (dataErrors))
       if (Object.keys(dataErrors).length === 0) {
         dispatch(actions.updateUserProfile(userDb))
-        alert('Update User success!');
         history.push('/')
       }
     } else {

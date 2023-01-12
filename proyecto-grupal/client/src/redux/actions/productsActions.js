@@ -47,6 +47,11 @@ export function postCategory(payload) {
       `http://localhost:3001/category`,
       payload
     );
+    Swal.fire({
+      title: 'Category Created',
+      icon: 'success',
+      confirmButtonText: 'Continue'
+    })
     return response;
   };
 }
@@ -54,6 +59,11 @@ export function postCategory(payload) {
 export function postProduct(payload) {
   console.log(`Payload de action postProduct: `);
   console.dir(payload);
+  Swal.fire({
+    title: 'Product Created',
+    icon: 'success',
+    confirmButtonText: 'Continue'
+  })
   return async (dispatch) => {
     const response = await axios.post(`http://localhost:3001/product`, payload);
     return response;
@@ -384,7 +394,6 @@ export function loginUser(payload) {
       sessionStorage.setItem("email", response.data.email);
       Swal.fire({
         title: 'Welcome',
-        //text: 'Do you want to continue',
         icon: 'success',
         confirmButtonText: 'Continue'
       })
@@ -455,10 +464,16 @@ export function updateUserProfile(payload) {
         `http://localhost:3001/user/profile/${payload.id}`,
         payload
       );
+      Swal.fire({
+        title: 'Data updated!',
+        icon: 'success',
+        confirmButtonText: 'Continue'
+      })
       return dispatch({
         type: "UPADTE_USER_PROFILE",
         payload: response.data,
       });
+      
     } catch (error) {
       alert(error.response.data.msg);
     }
@@ -489,8 +504,18 @@ export function resetPassword(payload) {
       );
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("email", response.data.mail);
+      Swal.fire({
+        title: 'Email sent!',
+        icon: 'success',
+        confirmButtonText: 'Continue'
+      })
+      
     } catch (error) {
-      console.log(error);
+      Swal.fire({
+        title: 'Invalid Email',
+        icon: 'error',
+        confirmButtonText: 'Continue'
+      })
     }
   };
 }

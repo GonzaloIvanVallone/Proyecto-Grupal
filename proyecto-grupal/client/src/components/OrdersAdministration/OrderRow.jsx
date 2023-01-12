@@ -38,7 +38,7 @@ export default function OrderRow({
       : dispatch(actions.notShippOrder({ id: id }));
     dispatch(actions.getOrders());
   }
-
+//<Link to={`/orderDetails/${user}/${id}`}>More Details</Link>
   return (
     <TableRow
       key={id}
@@ -50,7 +50,7 @@ export default function OrderRow({
       <TableCell sx={{ color: "#e7ebf0" }}>{price}</TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>{user}</TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>
-        <Link to={`/orderDetails/${user}/${id}`}>More Details</Link>
+        
       </TableCell>
       <TableCell sx={{ color: "#e7ebf0" }}>
         <button
