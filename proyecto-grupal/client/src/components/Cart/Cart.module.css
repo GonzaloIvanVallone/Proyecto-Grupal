@@ -3,7 +3,6 @@
     flex-direction: column;
     justify-content: space-evenly;
     box-sizing: border-box;
-    height: 100vh;
     padding: 2rem;
   }
 .header {

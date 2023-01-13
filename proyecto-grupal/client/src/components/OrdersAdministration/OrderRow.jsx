@@ -41,7 +41,7 @@ export default function OrderRow({
     dispatch(actions.getOrders());
   }
 
-  function handleDetailCard() {
+  function handleDetailCard(id) {
     history.push(`orders/admind/${id}`);
   }
 

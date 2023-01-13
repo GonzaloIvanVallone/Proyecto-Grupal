@@ -564,6 +564,7 @@ export function getUserWishList() {
       console.log(error);
     }
 }
+}
 
 export function saveUserWishList(payload) {
   console.log(`Payload de action saveUserWishList: `);
