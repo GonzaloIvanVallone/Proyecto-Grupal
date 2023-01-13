@@ -113,7 +113,7 @@ function CheckoutSuccess() {
           </li>
           <li className={estilos.itemLista}>
             <span className={estilos.items}>eMail: </span>
-            <span className={estilos.items}>{user?.email}</span>
+            <span className={estilos.items}>{dataUser[0]?.email}</span>
           </li>
           <li className={estilos.itemLista}>
             <span className={estilos.items}>Address: </span>
