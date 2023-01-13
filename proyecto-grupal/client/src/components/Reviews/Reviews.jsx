@@ -16,7 +16,7 @@ export default function Reviews({ productId }) {
 
   return (
     <div>
-      {reviews.map((review) => (
+      {reviews?.map((review) => (
         <Box mb={2}>
           <br />
           <Typography>{review.comment}</Typography>

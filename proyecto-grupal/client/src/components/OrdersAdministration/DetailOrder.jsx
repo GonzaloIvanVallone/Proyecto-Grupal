@@ -80,7 +80,7 @@ export default function DetailOrder({ id }) {
   let data = window.location.toString().split("/");
 
   useEffect(() => {
-    dispatch(actions.getOrdById(data[5]));
+    dispatch(actions.getOrdById(id));
   }, [dispatch]);
 
   function handleClickBack() {
