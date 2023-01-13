@@ -75,16 +75,20 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function OrderList({ onOrderSelect }) {
-  const orders = useSelector((state) => state.orders);
+  const order1 = useSelector((state) => state.orders);
   const dispatch = useDispatch();
   const classes = useStyles();
   const history = useHistory();
   const [showForm, setShowForm] = useState(false);
+  const userProfile = useSelector((state) => state.userProfile);
+  const user = useSelector((state) => state.user);
+  const orders = order1.filter(e => e.userId === user.id)
 
   console.log(orders);
-
+  
   useEffect(() => {
     dispatch(actions.getOrders());
+    dispatch(actions.getUserProfile(user))
   }, [dispatch]);
 
   function handleClickBack() {
