@@ -117,58 +117,22 @@ export default function productsReducer(state = initialState, action) {
 
       case "FILTER_BY_CATEGORIES":
         const allProductsCategories = state.allProducts;
-        console.log('Filtrando por categoría: ', action.payload);
         let categoriesFiltered;
         if (action.payload === "All") {
           categoriesFiltered = allProductsCategories;
         } else {
-          console.log(allProductsCategories);
           categoriesFiltered = allProductsCategories.map(elementoProducto => {
             let tieneCategoria = undefined;
             if (elementoProducto.categories) {
-              console.log('Entra al if de elementoProducto.categories: ', elementoProducto.categories);
               tieneCategoria = elementoProducto.categories.find(elementoCategoria => {
-                console.log('Entra al .find para el elementoCategoria: ', elementoCategoria);
-                console.log('elementoCategoria.name === action.payload?: ', elementoCategoria.name === action.payload);
                 return elementoCategoria.name === action.payload;
               })
             }
-            console.log('al terminar el .find, tieneCategoria es: ', tieneCategoria);
             if (tieneCategoria !== undefined) {
-              console.log('entra a tieneCategoria !== undefined porque eso es: ', tieneCategoria !== undefined);
-              console.log('el elementoProducto a devolver es: ', elementoProducto);
               return elementoProducto;
             }
           })
         }
-        // console.log(action.payload);
-        // const categoriesFiltered =
-        //   action.payload === "All"
-        //     ? allProductsCategories
-        //     : allProductsCategories.map((productItem) => {
-        //       let foundItem;
-        //       console.log('Entra al allProductsCategories.map. productItem es: ', productItem);
-        //       if(productItem.categories) {
-        //         console.log('Entra al if de productItem.categories: ', productItem.categories);
-        //         foundItem = productItem.categories.find(categoryItem => {
-        //           return categoryItem.hasOwnProperty("name");
-        //         });
-        //         console.log('foundItem: ', foundItem);
-        //       if (foundItem && foundItem.name.includes(action.payload)) {
-        //         console.log('entra al doble if');
-        //         return productItem;
-        //       }
-        //       }
-              
-        //       // if(foundItem) {
-        //       //   console.log('entra al if de foundItem y lo devuelve');
-        //       //   return foundItem;
-        //       // }
-        //       // productItem.categories
-        //       //     ?.find((e) => e.hasOwnProperty("name"))
-        //       //     .name.includes(action.payload)
-        //         });
-        console.log('categoriesFiltered: ', categoriesFiltered);
         return {
           ...state,
           products: categoriesFiltered.filter(elementoProducto => elementoProducto !== undefined),
@@ -343,7 +307,6 @@ export default function productsReducer(state = initialState, action) {
         socialUser: action.payload,
       };
     case "FILTER_BY_STATUS":
-      console.log("filtro: " + action.payload);
       if (action.payload === "all") {
         return { ...state, orders: state.allOrders };
       } else {
@@ -380,7 +343,6 @@ export default function productsReducer(state = initialState, action) {
         wishListItems: action.payload,
       };
     case "ADD_PRODUCT_TO_WISH_LIST":
-      console.log("action.payload de ADD_PRODUCT_TO_WISH_LIST", action.payload);
       const wishListItemToAdd = {
         id: action.payload.productId,
         thumbnail: action.payload.thumbnail,
@@ -388,27 +350,11 @@ export default function productsReducer(state = initialState, action) {
         description: action.payload.description,
         price: action.payload.price,
       };
-      console.log("wishListItemToAdd: ", wishListItemToAdd);
-      // for(let i = 0; i < state.wishListItems.length; i++) {
-      //   console.log('entra al for');
-      //   console.log('wishListItemToAdd.id: ', wishListItemToAdd.id);
-      //   console.log('state.wishListItems[i].id: ', state.wishListItems[i].id);
-      //   if(wishListItemToAdd.id === state.wishListItems[i].id) {
-      //     console.log('entra a wishListItemToAdd.id === state.wishListItems[i].id: ' + wishListItemToAdd.id === state.wishListItems[i].id)
-      //     return {
-      //       ...state,
-      //       wishListItems: [...state.wishListItems]
-      //     }
-      //   }
-      // }
       return {
         ...state,
         wishListItems: [...state.wishListItems, wishListItemToAdd],
       };
     case "REMOVE_PRODUCT_FROM_WISH_LIST":
-      console.log(
-        "action.payload de REMOVE_PRODUCT_FROM_WISH_LIST: " + action.payload
-      );
       return {
         ...state,
         wishListItems: state.wishListItems.filter((wishListItem) => {
