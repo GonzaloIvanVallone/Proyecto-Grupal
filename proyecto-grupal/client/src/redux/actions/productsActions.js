@@ -267,22 +267,6 @@ export function putOrder(id, body) {
   };
 }
 
-/*export function getOrdersByUser(userId) {
-  return async function (dispatch) {
-    try {
-      const res = await axios.get(
-        `/orders/user/${userId}`
-      );
-      dispatch({
-        type: "GET_ORDERS_BY_USER",
-        payload: res.data,
-      });
-    } catch (err) {
-      console.log(err);
-    }
-  };
-}*/
-
 export function setCart(cart) {
   return {
     type: "SET_CART",
@@ -401,7 +385,6 @@ export function loginUser(payload) {
       sessionStorage.setItem("email", response.data.email);
       Swal.fire({
         title: "Welcome",
-        //text: 'Do you want to continue',
         icon: "success",
         confirmButtonText: "Continue",
       });
